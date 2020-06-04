@@ -27,31 +27,44 @@
         document.querySelector(".jsonData").style.display = "none"
 
         let bodyWrapper = document.querySelector(".bodyWrapper")
-
-        function addRow(textArray){
+        let number_of_host = host.length
+        function addRow(textArray, n = number_of_host){
             let row = document.createElement("div")
+            let column_style = "1fr "
             row.classList.add("row")
 
+
+
             let columnTime = document.createElement("div")
-            columnTime.classList.add("time")
+            columnTime.classList.add("time", "column")
             columnTime.innerHTML = textArray[0]
+            row.append(columnTime)
 
-            let column0 = document.createElement("div")
-            column0.classList.add("host_0")
-            column0.innerHTML = textArray[1]
+            for (let i=0; i < n; i++){
+                let column = document.createElement("div")
+                column.classList.add(`host_${i}`, "column", "host")
+                column.innerHTML = textArray[i+1]
+                column_style += "2fr "
+                row.append(column)
+            }
 
-            let column1 = document.createElement("div")
-            column1.classList.add("host_1")
-            column1.innerHTML = textArray[2]
 
-            let column2 = document.createElement("div")
-            column2.classList.add("host_2")
-            column2.innerHTML = textArray[3]
+            let columnChannel = document.createElement("div")
+            columnChannel.classList.add("channel", "column")
+            columnChannel.innerHTML = textArray[n+1]
+            column_style += "2fr"
 
-            row.append(columnTime, column0, column1, column2)
+            row.style.gridTemplateColumns = column_style
+            row.append(columnChannel)
             return row
         }
-        let newRow = addRow(["time", "Host 0", "Host 1", "Host 2"])
+
+        let header = ["time"]
+        for (let i=0; i < number_of_host; i++){
+            header.push(`Host ${i}`)
+        }
+        header.push("Channel")
+        let newRow = addRow(header)
         bodyWrapper.append(newRow)
 
 
@@ -91,21 +104,23 @@
                 "Host 1": "host_1",
                 "Host 2": "host_2"
             }
+
+            let channel_status_array = []
             _event_array.forEach(p=>{
 
                 if (p.event == "ScheduleDataFrameEvent"){
                     let targetHost = mapping[p.origin]
                     if (p.dataframe_type == "internal DF"){
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) Schedule: <b>${p.sender}</b> sends <b> ${p.dataframe_type}  (df ${p.dataframe_id})</b> to <b>${p.receiver}</b> at <b>${p.arrival_time}</b></li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) ScheduleDataFrameEvent: <b>${p.sender}</b> sends <b> ${p.dataframe_type}  (df ${p.dataframe_id})</b> to <b>${p.receiver}</b> at <b>${p.arrival_time}</b></li>`
                     }
 
                     if (p.dataframe_type == "external DF"){
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) Schedule: <b>${p.sender}</b> sends <b> ${p.dataframe_type}  (df ${p.dataframe_id})</b> to <b>${p.receiver}</b> at <b>${p.arrival_time}</b></li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) ScheduleDataFrameEvent: <b>${p.sender}</b> sends <b> ${p.dataframe_type}  (df ${p.dataframe_id})</b> to <b>${p.receiver}</b> at <b>${p.arrival_time}</b></li>`
                     }
 
                     if (p.dataframe_type == "ack"){
                         targetHost = mapping[p.sender]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) Schedule: <b>${p.sender}</b> sends <b> ${p.dataframe_type}  (df ${p.dataframe_id})</b> to <b>${p.receiver}</b> at <b>${p.arrival_time}</b></li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) ScheduleDataFrameEvent: <b>${p.sender}</b> sends <b> ${p.dataframe_type}  (df ${p.dataframe_id})</b> to <b>${p.receiver}</b> at <b>${p.arrival_time}</b></li>`
                     }
                 }
 
@@ -115,17 +130,17 @@
 
 
                     if (p.dataframe_type == "internal DF"){
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) Internal Dataframe <b>(df ${p.dataframe_id})</b> arrives. (${p.sender} -> ${p.receiver})</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) ProcessDataFrameArrivalEvent: Internal Dataframe <b>(df ${p.dataframe_id})</b> arrives. (${p.sender} -> ${p.receiver})</li>`
                     }
 
                     if (p.dataframe_type == "external DF"){
                         targetHost = mapping[p.receiver]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) External Frame <b> Dataframe ${p.dataframe_id} </b> from <b> ${p.sender}</b> to <b>${p.receiver} </b>  arrives. </li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) ProcessDataFrameArrivalEvent: External Frame <b> Dataframe ${p.dataframe_id} </b> from <b> ${p.sender}</b> to <b>${p.receiver} </b>  arrives. </li>`
                     }
 
                     if (p.dataframe_type == "ack"){
                         targetHost = mapping[p.receiver]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) ACK <b> Dataframe ${p.dataframe_id}</b> from ${p.receiver} to ${p.sender} arrives.</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) ProcessDataFrameArrivalEvent: ACK <b> Dataframe ${p.dataframe_id}</b> from ${p.receiver} to ${p.sender} arrives.</li>`
                     }
                     // result_text[targetHost] += `<li>(Event ${p.event_id}) Dataframe from ${p.sender} to ${p.receiver} reaches. </li>`
                 }
@@ -133,22 +148,22 @@
                 if (p.event == "SenseChannelEvent"){
                     if (p.dataframe_type == "df, stage 0"){
                         targetHost = mapping[p.sender]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>Sense channel (df, stage 0)</b> for <b> df ${p.dataframe_id}</b>.</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) SenseChannelEvent: <b>Sense channel (df, stage 0)</b> for <b> df ${p.dataframe_id}</b>.</li><br>`
                     }
 
                     if (p.dataframe_type == "df, stage 1"){
                         targetHost = mapping[p.sender]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>Sense channel (df, stage 1)</b> for <b> df ${p.dataframe_id}</b>.</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) SenseChannelEvent: <b>Sense channel (df, stage 1)</b> for <b> df ${p.dataframe_id}</b>.</li><br>`
                     }
 
                     if (p.dataframe_type == "ack, stage 0"){
                         targetHost = mapping[p.receiver]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>Sense channel (ack, stage 0)</b> for <b> df ${p.dataframe_id}</b>.</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) SenseChannelEvent: <b>Sense channel (ack, stage 0)</b> for <b> df ${p.dataframe_id}</b>.</li><br>`
                     }
 
                     if (p.dataframe_type == "ack, stage 1"){
                         targetHost = mapping[p.receiver]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>Sense channel (ack, stage 1)</b> for <b> df ${p.dataframe_id}</b>.</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) SenseChannelEvent: <b>Sense channel (ack, stage 1)</b> for <b> df ${p.dataframe_id}</b>.</li><br>`
                     }
 
                 }
@@ -160,12 +175,12 @@
                     if (p.push_type == "push data to channel"){
                         targetHost = mapping[p.sender]
 
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>Push df ${p.dataframe_id} to channel </b>  .</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) PushToChannelEvent: <b>Push df ${p.dataframe_id} to channel </b>  .</li><br>`
                     }
 
                     if (p.push_type == "push ack to channel"){
                         targetHost = mapping[p.receiver]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>Push ack ${p.dataframe_id} to channel (${p.receiver}->${p.sender})</b>.</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) PushToChannelEvent: <b>Push ack ${p.dataframe_id} to channel (${p.receiver}->${p.sender})</b>.</li><br>`
                     }
                 }
 
@@ -175,12 +190,12 @@
 
                     if (p.departure_type == "data"){
                         targetHost = mapping[p.sender]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b> dataframe ${p.dataframe_id} departs from channel to ${p.receiver}   </b>  .</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) DepartureEvent: <b> dataframe ${p.dataframe_id} departs from channel to ${p.receiver}   </b>  .</li><br>`
                     }
 
                     if (p.departure_type == "ack"){
                         targetHost = mapping[p.receiver]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b> ack ${p.dataframe_id} departs from channel to ${p.receiver}   </b>  .</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b> ack ${p.dataframe_id} departs from channel to ${p.receiver}   </b>  .</li><br>`
                     }
                 }
 
@@ -189,7 +204,7 @@
                     console.log(p)
 
                     targetHost = mapping[p.sender]
-                    result_text[targetHost] += `<li>(Event ${p.event_id}) AckExpectedEvent: <b> ${p.sender} expecet <b> ack ${p.dataframe_id} </b> from ${p.receiver} at ${p.expected_time}</li>`
+                    result_text[targetHost] += `<li>(Event ${p.event_id}) AckExpectedEvent: <b> ${p.sender} expecet <b> ack ${p.dataframe_id} </b> from ${p.receiver} at ${p.expected_time}</li><br>`
                 }
 
                 if (p.event == "SuccessTransferEvent"){
@@ -197,7 +212,7 @@
                     console.log(p)
 
                     targetHost = mapping[p.sender]
-                    result_text[targetHost] += `<li>(Event ${p.event_id}) SuccessTransferEvent: <b> ${p.sender} expecet <b> ack ${p.dataframe_id} </b> from ${p.receiver} at ${p.expected_time}</li>`
+                    result_text[targetHost] += `<li>(Event ${p.event_id}) SuccessTransferEvent: <b> ${p.sender} expecet <b> ack ${p.dataframe_id} </b> from ${p.receiver} at ${p.event_time}</li><br>`
                 }
 
                 if (p.event == "AckResultEvent"){
@@ -205,12 +220,12 @@
                     console.log(p)
                     if (p.result == "success"){
                         targetHost = mapping[p.sender]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) AckResultEvent: success transfer </li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) AckResultEvent: success transfer </li><br>`
                     }
 
                     if (p.result == "failure"){
                         targetHost = mapping[p.sender]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) AckResultEvent: <b>Failure</b>, collision happens and set a <b>Timer ${p.dataframe_id} which will ring at ${p.counter_duration}</b> </li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) AckResultEvent: <b>Failure</b>, collision happens and set a <b>Timer ${p.dataframe_id} which will ring at ${p.counter_duration}</b> </li><br>`
                     }
 
                 }
@@ -221,20 +236,31 @@
                     console.log(p)
                     if (p.status == "deactivate"){
                         targetHost = mapping[p.origin]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>TimeoutEvent</b>: Timer ${p.dataframe_id} timesup but it is deactivated. Nothing will happen. </li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>TimeoutEvent</b>: Timer ${p.dataframe_id} timesup but it is deactivated. Nothing will happen. </li><br>`
                     }
 
                     if (p.status == "activated"){
                         targetHost = mapping[p.origin]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>TimeoutEvent</b>: Timer ${p.dataframe_id} timesup. ${p.origin} is going to push the data to channel </li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>TimeoutEvent</b>: Timer ${p.dataframe_id} timesup. ${p.origin} is going to push the data to channel </li><br>`
                     }
 
 
-                }
+                }// TimeoutEvent
+
+                channel_status_array.push([p.event_id, p.channel_status])
+
+            }) // event for each of the time category
+            console.log(channel_status_array)
+            let channel_text = ""
+            channel_status_array.forEach(p=>{
+                let event_id = p[0]
+                let status = p[1]
+                channel_text += `${event_id}: ${status} <br>`
             })
 
-            let result_text_array = Object.values(result_text)
 
+            let result_text_array = Object.values(result_text)
+            result_text_array.push(channel_text)
             let newRow = addRow(result_text_array)
             bodyWrapper.append(newRow)
 
