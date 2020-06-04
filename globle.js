@@ -6,7 +6,7 @@ const fs = require("fs")
 // const config = require('static/data/ECS152A/chapter1.json')
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 function escapeSpecialChars(jsonString) {
     return jsonString
