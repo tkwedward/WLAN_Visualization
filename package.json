@@ -5,7 +5,7 @@
   "main": "getSolution.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --ignore feedback.json globle.js"
+    "start": "node globle.js"
   },
   "engines": {
     "node": "12.x"
