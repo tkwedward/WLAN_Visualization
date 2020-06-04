@@ -5,8 +5,8 @@
   margin-right: auto;
 }
 
-.time {
-  width: 150px;
+.timer_info {
+  color: red;
 }
 
 .host, .channel {

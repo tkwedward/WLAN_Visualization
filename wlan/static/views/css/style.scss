@@ -7,16 +7,22 @@
 
 
 }
+
+.timer_info{
+    color: red;
+}
 .time {
-    width: 150px;
+    // width: 10vw;
 }
 .host, .channel{
     margin-bottom: 10px;
     padding: 5px;
+    // width: 20vw
 }
 
 .channel {
-    background: gold
+    background: gold;
+    // width: 20vw
 }
 
 .host_0 {
