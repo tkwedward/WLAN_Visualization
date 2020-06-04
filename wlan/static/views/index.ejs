@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+
+        </style>
+
+    </head>
+
+    <body>
+        <div class="jsonData">
+            <%= pageTitle %>
+        </div>
+        <div class="bodyWrapper">
+
+        </div>
+
+    </body>
+
+
+    <script type="text/javascript">
+        let data = document.querySelector(".jsonData").innerText
+        data = JSON.parse(data)
+        let host = data["host"]
+        document.querySelector(".jsonData").style.display = "none"
+
+        let bodyWrapper = document.querySelector(".bodyWrapper")
+
+        function addRow(textArray){
+            let row = document.createElement("div")
+            row.classList.add("row")
+
+            let columnTime = document.createElement("div")
+            columnTime.classList.add("time")
+            columnTime.innerHTML = textArray[0]
+
+            let column0 = document.createElement("div")
+            column0.classList.add("host_0")
+            column0.innerHTML = textArray[1]
+
+            let column1 = document.createElement("div")
+            column1.classList.add("host_1")
+            column1.innerHTML = textArray[2]
+
+            let column2 = document.createElement("div")
+            column2.classList.add("host_2")
+            column2.innerHTML = textArray[3]
+
+            row.append(columnTime, column0, column1, column2)
+            return row
+        }
+        let newRow = addRow(["time", "Host 0", "Host 1", "Host 2"])
+        bodyWrapper.append(newRow)
+
+
+
+        let eventsArray = data["data"]
+        // find out all the time
+        let time_array = new Set()
+        eventsArray.forEach(_event =>{
+            time_array.add(_event.event_time)
+        })
+
+
+        // to create a time category array
+        let time_category = {}
+        time_array.forEach(_t=>{
+            time_category[_t] = []
+        })
+
+        eventsArray.forEach((item, i) => {
+            let _event_time = item.event_time
+            time_category[_event_time].push(item)
+        });
+
+        // console.log(time_category)
+        Object.entries(time_category).forEach(item =>{
+            let time = item[0]
+            let _event_array = item[1]
+            result_text = {
+                "time": `<p>${time}</p>`,
+                "host_0": "",
+                "host_1": "",
+                "host_2": ""
+            }
+
+            let mapping = {
+                "Host 0": "host_0",
+                "Host 1": "host_1",
+                "Host 2": "host_2"
+            }
+            _event_array.forEach(p=>{
+
+                if (p.event == "ScheduleDataFrameEvent"){
+                    let targetHost = mapping[p.origin]
+                    if (p.dataframe_type == "internal DF"){
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) Schedule: <b>${p.sender}</b> sends <b> ${p.dataframe_type}  (df ${p.dataframe_id})</b> to <b>${p.receiver}</b> at <b>${p.arrival_time}</b></li>`
+                    }
+
+                    if (p.dataframe_type == "external DF"){
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) Schedule: <b>${p.sender}</b> sends <b> ${p.dataframe_type}  (df ${p.dataframe_id})</b> to <b>${p.receiver}</b> at <b>${p.arrival_time}</b></li>`
+                    }
+
+                    if (p.dataframe_type == "ack"){
+                        targetHost = mapping[p.sender]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) Schedule: <b>${p.sender}</b> sends <b> ${p.dataframe_type}  (df ${p.dataframe_id})</b> to <b>${p.receiver}</b> at <b>${p.arrival_time}</b></li>`
+                    }
+                }
+
+
+                if (p.event == "ProcessDataFrameArrivalEvent"){
+                    let targetHost = mapping[p.origin]
+
+
+                    if (p.dataframe_type == "internal DF"){
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) Internal Dataframe <b>(df ${p.dataframe_id})</b> arrives. (${p.sender} -> ${p.receiver})</li>`
+                    }
+
+                    if (p.dataframe_type == "external DF"){
+                        targetHost = mapping[p.receiver]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) External Frame <b> Dataframe ${p.dataframe_id} </b> from <b> ${p.sender}</b> to <b>${p.receiver} </b>  arrives. </li>`
+                    }
+
+                    if (p.dataframe_type == "ack"){
+                        targetHost = mapping[p.receiver]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) ACK <b> Dataframe ${p.dataframe_id}</b> from ${p.receiver} to ${p.sender} arrives.</li>`
+                    }
+                    // result_text[targetHost] += `<li>(Event ${p.event_id}) Dataframe from ${p.sender} to ${p.receiver} reaches. </li>`
+                }
+
+                if (p.event == "SenseChannelEvent"){
+                    if (p.dataframe_type == "df, stage 0"){
+                        targetHost = mapping[p.sender]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>Sense channel (df, stage 0)</b> for <b> df ${p.dataframe_id}</b>.</li>`
+                    }
+
+                    if (p.dataframe_type == "df, stage 1"){
+                        targetHost = mapping[p.sender]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>Sense channel (df, stage 1)</b> for <b> df ${p.dataframe_id}</b>.</li>`
+                    }
+
+                    if (p.dataframe_type == "ack, stage 0"){
+                        targetHost = mapping[p.receiver]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>Sense channel (ack, stage 0)</b> for <b> df ${p.dataframe_id}</b>.</li>`
+                    }
+
+                    if (p.dataframe_type == "ack, stage 1"){
+                        targetHost = mapping[p.receiver]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>Sense channel (ack, stage 1)</b> for <b> df ${p.dataframe_id}</b>.</li>`
+                    }
+
+                }
+
+
+                if (p.event == "PushToChannelEvent"){
+                    console.log(p.push_type)
+                    let targetHost
+                    if (p.push_type == "push data to channel"){
+                        targetHost = mapping[p.sender]
+
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>Push df ${p.dataframe_id} to channel </b>  .</li>`
+                    }
+
+                    if (p.push_type == "push ack to channel"){
+                        targetHost = mapping[p.receiver]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>Push ack ${p.dataframe_id} to channel (${p.receiver}->${p.sender})</b>.</li>`
+                    }
+                }
+
+                if (p.event == "DepartureEvent"){
+
+                    let targetHost
+
+                    if (p.departure_type == "data"){
+                        targetHost = mapping[p.sender]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b> dataframe ${p.dataframe_id} departs from channel to ${p.receiver}   </b>  .</li>`
+                    }
+
+                    if (p.departure_type == "ack"){
+                        targetHost = mapping[p.receiver]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b> ack ${p.dataframe_id} departs from channel to ${p.receiver}   </b>  .</li>`
+                    }
+                }
+
+                if (p.event == "AckExpectedEvent"){
+                    let targetHost
+                    console.log(p)
+
+                    targetHost = mapping[p.sender]
+                    result_text[targetHost] += `<li>(Event ${p.event_id}) AckExpectedEvent: <b> ${p.sender} expecet <b> ack ${p.dataframe_id} </b> from ${p.receiver} at ${p.expected_time}</li>`
+                }
+
+                if (p.event == "SuccessTransferEvent"){
+                    let targetHost
+                    console.log(p)
+
+                    targetHost = mapping[p.sender]
+                    result_text[targetHost] += `<li>(Event ${p.event_id}) SuccessTransferEvent: <b> ${p.sender} expecet <b> ack ${p.dataframe_id} </b> from ${p.receiver} at ${p.expected_time}</li>`
+                }
+
+                if (p.event == "AckResultEvent"){
+                    let targetHost
+                    console.log(p)
+                    if (p.result == "success"){
+                        targetHost = mapping[p.sender]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) AckResultEvent: success transfer </li>`
+                    }
+
+                    if (p.result == "failure"){
+                        targetHost = mapping[p.sender]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) AckResultEvent: <b>Failure</b>, collision happens and set a <b>Timer ${p.dataframe_id} which will ring at ${p.counter_duration}</b> </li>`
+                    }
+
+                }
+
+                if (p.event == "TimeoutEvent"){
+
+                    let targetHost
+                    console.log(p)
+                    if (p.status == "deactivate"){
+                        targetHost = mapping[p.origin]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>TimeoutEvent</b>: Timer ${p.dataframe_id} timesup but it is deactivated. Nothing will happen. </li>`
+                    }
+
+                    if (p.status == "activated"){
+                        targetHost = mapping[p.origin]
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>TimeoutEvent</b>: Timer ${p.dataframe_id} timesup. ${p.origin} is going to push the data to channel </li>`
+                    }
+
+
+                }
+            })
+
+            let result_text_array = Object.values(result_text)
+
+            let newRow = addRow(result_text_array)
+            bodyWrapper.append(newRow)
+
+        })
+
+
+
+
+        // to categorize the events according to time
+
+
+        // data.forEach(p=>{
+        //     console.log(p)
+        // })
+    </script>
+
+    <link rel="stylesheet" href="static/views/css/style.css">
+</html>
