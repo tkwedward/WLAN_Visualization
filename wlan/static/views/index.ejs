@@ -30,7 +30,8 @@
         let number_of_host = host.length
         function addRow(textArray, n = number_of_host){
             let row = document.createElement("div")
-            let column_style = "13vw "
+            let column_style = "15vw "
+            column_width = "18vw "
             row.classList.add("row")
 
 
@@ -44,7 +45,7 @@
                 let column = document.createElement("div")
                 column.classList.add(`host_${i}`, "column", "host")
                 column.innerHTML = textArray[i+1]
-                column_style += "16vw "
+                column_style += column_width
                 row.append(column)
             }
 
@@ -52,7 +53,7 @@
             let columnChannel = document.createElement("div")
             columnChannel.classList.add("channel", "column")
             columnChannel.innerHTML = textArray[n+1]
-            column_style += "16vw"
+            column_style += column_width
 
             row.style.gridTemplateColumns = column_style
             row.append(columnChannel)
@@ -108,6 +109,13 @@
             let channel_status_array = []
             _event_array.forEach(p=>{
 
+                function colorized(text, color="red"){
+                    return `<span style='color: ${color}'> ${text} </span>`
+
+                }
+
+
+
                 if (p.event == "ScheduleDataFrameEvent"){
                     let targetHost = mapping[p.origin]
                     if (p.dataframe_type == "internal DF"){
@@ -145,29 +153,31 @@
                     // result_text[targetHost] += `<li>(Event ${p.event_id}) Dataframe from ${p.sender} to ${p.receiver} reaches. </li>`
                 }
 
+
+
                 if (p.event == "SenseChannelEvent"){
-                    console.log(p.result_description);
+                    console.log(p.result);
                     if (p.dataframe_type == "df, stage 0"){
                         targetHost = mapping[p.sender]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) SenseChannelEvent: <b>Sense channel (df, stage 0)</b> for <b> df ${p.dataframe_id}</b>.</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) SenseChannelEvent: ${colorized('(' + p.result + ')')} <b>Sense channel (df, stage 0)</b> for <b> df ${p.dataframe_id}</b>.</li>`
                         result_text[targetHost] += `- <span class="timer_info">${p.result_description}</span> <br><br>`
                     }
 
                     if (p.dataframe_type == "df, stage 1"){
                         targetHost = mapping[p.sender]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) SenseChannelEvent: <b>Sense channel (df, stage 1)</b> for <b> df ${p.dataframe_id}</b>.</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) SenseChannelEvent: ${colorized('(' + p.result + ')')} <b>Sense channel (df, stage 1)</b> for <b> df ${p.dataframe_id}</b>.</li>`
                         result_text[targetHost] += `- <span class="timer_info">${p.result_description}</span> <br><br>`
                     }
 
                     if (p.dataframe_type == "ack, stage 0"){
                         targetHost = mapping[p.receiver]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) SenseChannelEvent: <b>Sense channel (ack, stage 0)</b> for <b> df ${p.dataframe_id}</b>.</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) SenseChannelEvent: ${colorized('(' + p.result + ')')} <b>Sense channel (ack, stage 0)</b> for <b> df ${p.dataframe_id}</b>.</li>`
                         result_text[targetHost] += `- <span class="timer_info">${p.result_description}</span> <br><br>`
                     }
 
                     if (p.dataframe_type == "ack, stage 1"){
                         targetHost = mapping[p.receiver]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) SenseChannelEvent: <b>Sense channel (ack, stage 1)</b> for <b> df ${p.dataframe_id}</b>.</li>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) SenseChannelEvent: ${colorized('(' + p.result + ')')} <b>Sense channel (ack, stage 1)</b> for <b> df ${p.dataframe_id}</b>.</li>`
                         result_text[targetHost] += `- <span class="timer_info">${p.result_description}</span> <br><br>`
                     }
 
@@ -227,12 +237,12 @@
 
                     if (p.result == "success"){
                         targetHost = mapping[p.sender]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) AckResultEvent: success transfer </li><br>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) <b>${colorized('AckResultEvent: success transfer', "DarkOrange")}</b> <b>(dataframe ${p.dataframe_id})</b></li><br>`
                     }
 
                     if (p.result == "failure"){
                         targetHost = mapping[p.sender]
-                        result_text[targetHost] += `<li>(Event ${p.event_id}) AckResultEvent: <b>Failure</b>, collision happens and set a <b>Timer ${p.dataframe_id} which will ring at ${p.counter_duration}</b> </li><br>`
+                        result_text[targetHost] += `<li>(Event ${p.event_id}) ${colorized('AckResultEvent: <b>Failure</b>, collision happens', 'Purple')} and set a <b>Timer ${p.dataframe_id} which will ring at ${p.counter_duration}</b> </li><br>`
                     }
 
                 }
@@ -252,6 +262,19 @@
 
 
                 }// TimeoutEvent
+
+                Object.entries(p.host_status).forEach(host=>{
+
+                    let name = host[0]
+                    let status = host[1]
+                    console.log(name)
+                    targetHost = mapping[name]
+                    result_text[targetHost] += `(Event ${p.event_id}) ${name} ${status}<br>`
+                    result_text[targetHost] += `(Event ${p.event_id}) Buffer: ${p.buffer_status[name]}<br>`
+
+                    console.log(p.buffer_status[name])
+
+                })
 
                 channel_status_array.push([p.event_id, p.channel_status])
 
