@@ -57,7 +57,7 @@ Object.entries(time_category).forEach(item =>{
             // document.body.innerHTML =
             // eventResultText[host_name] += p.buffer_status[host]
             // 3551
-            // eventResultText[host_name] += `Blocking: ${p.blocking_status[_h]}<br>`
+            eventResultText[host_name] += `status: ${p.blocking_status[_h]}<br>`
             eventResultText[host_name] += `Buffer: ${p.buffer_status[_h]}<br>`
 
             eventResultText[host_name] += `Counter: ${p.counter_status[_h]}<br>`

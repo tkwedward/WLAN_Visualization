@@ -63,12 +63,13 @@ function createEventBlock(){
         grid_layout+= "1fr "
     })
     eventBlock.style.gridTemplateColumns = grid_layout
+    let color = ["Azure", "AntiqueWhite"]
 
-
-    host.forEach(h=>{
+    host.forEach((h, i)=>{
         // the inner event blck of each host
         let block = document.createElement("div")
         block.classList.add(`${mapping[h]}_event_block`, "inner_event_block")
+        block.style.background = color[i%2]
 
         block.addText = function(text){
             block.innerHTML = text
