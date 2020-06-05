@@ -209,7 +209,7 @@ function generateEventText(time, p){
 
         if (p.departure_type == "ack"){
             targetHost = mapping[p.receiver]
-            result_text[targetHost] += `<li>(Event ${p.event_id}) DepartureEvent: <b> ack ${p.dataframe_id} departs from channel to ${p.receiver}   </b>  .</li>`
+            result_text[targetHost] += `<li>(Event ${p.event_id}) DepartureEvent: <b> ack ${p.dataframe_id} departs from channel to ${p.sender}   </b>  .</li>`
             result_text[targetHost] += `- <span class="timer_info">${p.result_description}</span> <br><br>`
         }
     }
@@ -225,7 +225,7 @@ function generateEventText(time, p){
         let targetHost
 
         targetHost = mapping[p.sender]
-        result_text[targetHost] += `<li>(Event ${p.event_id}) SuccessTransferEvent: <b> ${p.receiver} receive the <b> ack ${p.dataframe_id} </b> from ${p.sender} at ${p.event_time}</li><br>`
+        result_text[targetHost] += `<li>(Event ${p.event_id}) SuccessTransferEvent: <b> ${p.sender} receive the <b> ack ${p.dataframe_id} </b> from ${p.receiver} at ${p.event_time}</li><br>`
     }
 
     if (p.event == "AckResultEvent"){
