@@ -1,16 +1,20 @@
-let mapping = {
-    "Host 0": "host_0",
-    "Host 1": "host_1",
-    "Host 2": "host_2"
-}
+let data = document.querySelector(".jsonData").innerText
+data = JSON.parse(data)
+let host = data["host"]
+document.querySelector(".jsonData").style.display = "none"
+
+
+let mapping = {}
+
+host.forEach((h, i)=>{
+    mapping[h] = "host_" + i
+})
 
 function createNewRow(time){
     let row = document.createElement("div")
     let column_style = "15% "
     column_width = "85% "
     row.classList.add("row")
-
-
 
     let columnTime = document.createElement("div")
     columnTime.classList.add("time", "column")
@@ -53,7 +57,12 @@ function createEventBlock(){
 
     let eventBlock = document.createElement("div")
     eventBlock.classList.add("eventBlock")
-    eventBlock.style.gridTemplateColumns = "1fr 1fr 1fr 1fr"
+
+    let grid_layout = ""
+    host.forEach(p=>{
+        grid_layout+= "1fr "
+    })
+    eventBlock.style.gridTemplateColumns = grid_layout
 
 
     host.forEach(h=>{
@@ -92,12 +101,15 @@ function colorized(text, color="red"){
 function generateEventText(time, p){
 
     let result_text = {
-        "time": `${time}`,
-        "host_0": "",
-        "host_1": "",
-        "host_2": "",
-        "host_3": ""
+        "time": `${time}`
     }
+
+    host.forEach((h, i) => {
+        let targetHost = mapping[h]
+        result_text[targetHost] = ""
+
+    });
+
 
 
     if (p.event == "ScheduleDataFrameEvent"){
@@ -132,7 +144,7 @@ function generateEventText(time, p){
 
         if (p.dataframe_type == "ack"){
             targetHost = mapping[p.receiver]
-            result_text[targetHost] += `<li>(Event ${p.event_id}) ProcessDataFrameArrivalEvent: ACK <b> Dataframe ${p.dataframe_id}</b> from ${p.receiver} to ${p.sender} arrives.</li>`
+            result_text[targetHost] += `<li>(Event ${p.event_id}) ProcessDataFrameArrivalEvent: ACK <b> Dataframe ${p.dataframe_id}</b> from ${p.sender} to ${p.receiver} arrives.</li>`
         }
         // result_text[targetHost] += `<li>(Event ${p.event_id}) Dataframe from ${p.sender} to ${p.receiver} reaches. </li>`
     }
@@ -213,7 +225,7 @@ function generateEventText(time, p){
         let targetHost
 
         targetHost = mapping[p.sender]
-        result_text[targetHost] += `<li>(Event ${p.event_id}) SuccessTransferEvent: <b> ${p.sender} expecet <b> ack ${p.dataframe_id} </b> from ${p.receiver} at ${p.event_time}</li><br>`
+        result_text[targetHost] += `<li>(Event ${p.event_id}) SuccessTransferEvent: <b> ${p.receiver} receive the <b> ack ${p.dataframe_id} </b> from ${p.sender} at ${p.event_time}</li><br>`
     }
 
     if (p.event == "AckResultEvent"){

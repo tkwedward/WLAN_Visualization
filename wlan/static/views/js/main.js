@@ -1,7 +1,3 @@
-let data = document.querySelector(".jsonData").innerText
-data = JSON.parse(data)
-let host = data["host"]
-document.querySelector(".jsonData").style.display = "none"
 
 let bodyWrapper = document.querySelector(".bodyWrapper")
 let number_of_host = host.length
@@ -30,7 +26,6 @@ eventsArray.forEach((item, i) => {
     time_category[_event_time].push(item)
 });
 
-// console.log(time_category)
 Object.entries(time_category).forEach(item =>{
     let time = item[0]
     let _event_array = item[1]
@@ -61,6 +56,8 @@ Object.entries(time_category).forEach(item =>{
             eventResultText[host_name] = `(Event ${p.event_id}) ${name} ${status}<br>` + eventResultText[host_name]
             // document.body.innerHTML =
             // eventResultText[host_name] += p.buffer_status[host]
+            // 3551
+            // eventResultText[host_name] += `Blocking: ${p.blocking_status[_h]}<br>`
             eventResultText[host_name] += `Buffer: ${p.buffer_status[_h]}<br>`
 
             eventResultText[host_name] += `Counter: ${p.counter_status[_h]}<br>`
