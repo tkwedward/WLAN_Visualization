@@ -1,19 +1,37 @@
 .row{
     display:grid;
-
+    grid-template-columns: 1fr 5fr;
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 10px;
 
 
 }
+
+.eventRow{
+    .eventBlock{
+        display:grid;
+        background: AliceBlue;
+
+        .inner_event_block{
+            margin: 20px;
+        }
+    }
+
+    .event_list_block{
+        margin-bottom: 20px;
+    }
+}
+
+
 
 .timer_info{
     color: red;
 }
-.time {
-    // width: 10vw;
-}
+// .time {
+//     // width: 10vw;
+// }
 .host, .channel{
     margin-bottom: 10px;
     padding: 5px;
@@ -24,15 +42,15 @@
     background: gold;
     // width: 20vw
 }
-
-.host_0 {
-    background: AliceBlue
-}
-
-.host_1 {
-    background: DarkSeaGreen
-}
-
-.host_2{
-    background: DeepSkyBlue
-}
+//
+// .host_0 {
+//     background: AliceBlue
+// }
+//
+// .host_1 {
+//     background: DarkSeaGreen
+// }
+//
+// .host_2{
+//     background: DeepSkyBlue
+// }

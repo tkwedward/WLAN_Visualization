@@ -1,8 +1,21 @@
 .row {
   display: grid;
+  grid-template-columns: 1fr 5fr;
   width: 90%;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 10px;
+}
+
+.eventRow .eventBlock {
+  display: grid;
+  background: AliceBlue;
+}
+.eventRow .eventBlock .inner_event_block {
+  margin: 20px;
+}
+.eventRow .event_list_block {
+  margin-bottom: 20px;
 }
 
 .timer_info {
@@ -16,18 +29,6 @@
 
 .channel {
   background: gold;
-}
-
-.host_0 {
-  background: AliceBlue;
-}
-
-.host_1 {
-  background: DarkSeaGreen;
-}
-
-.host_2 {
-  background: DeepSkyBlue;
 }
 
 /*# sourceMappingURL=style.css.map */
