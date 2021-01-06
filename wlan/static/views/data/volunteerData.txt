@@ -1,0 +1,32 @@
+name: Kaden  J.
+photo: https://soarucd.weebly.com/uploads/1/3/1/7/131766630/editor/2a0d4e41-db18-4053-aed5-a0c604e006c4-rw-600.png?1587241744
+content: “Being a part of SOAR gives me the opportunity to introduce children to the exciting world of STEM. Inspiring them through these activities is very fulfilling, as it could be a defining moment that shapes their educational future.”
+---
+name: Dahlia P.
+photo: https://soarucd.weebly.com/uploads/1/3/1/7/131766630/published/0dccf4fc-c4b9-4bf4-832b-b3e1f2229dc7-rw-1200.png?1590088453
+content: ​"I joined SOAR because I wanted to share my wonder for aerospace with other kids like me and help guide the next generation of scientists and thinkers. As the first engineer in my first-generation immigrant family, I have also personally benefited from STEM outreach efforts on my journey to studying MAE at UC Davis. The kids at GCC are boundlessly creative, curious, and eager to share their stories and I learn from them just as much as I teach them about what I do.”​​​​​​​
+---
+name: Danielle F.
+photo: https://soarucd.weebly.com/uploads/1/3/1/7/131766630/editor/0a73a8e7-0bfb-4281-b560-0cf95f8bc909-rw-600.png?1587241957
+content: ​"Even at a young age I knew I wanted to work in the aerospace industry. One of the biggest driving forces for my inclination was my mother. She inspired me to join the field of STEM by exposing me to aircraft's through her work at the airport. She nurtured my curiosity by answering every silly question I asked about airplanes and space. I joined SOAR because I wanted to encourage other kids to join STEM fields, so that they can one day shape the future science. Meeting these kids and talking to them about the work we do inspires them just and much as it inspires me to keep innovating."
+
+---
+name: Andrew A.
+photo: https://soarucd.weebly.com/uploads/1/3/1/7/131766630/published/bb119a3c-e61e-42a0-a99b-80dbd3ab28c8-rw-1200.png?1590088350
+content: "From kindergarten to 6th grade I did not have any STEM reinforcement in my academia, and it was a struggle to develop the important academic bases needed to proceed, work, and thrive in any STEM field. It's hard for me to imagine a world today where young children are prevented from exploring the amazing world that is science, once like me, so I joined SOAR to make sure that I can give as many children the academic opportunities and support that I did not receive so that they may stand on my shoulders to achieve more than I can or will.”
+---
+name: Kasumi K.
+photo: https://soarucd.weebly.com/uploads/1/3/1/7/131766630/published/f2b013ca-8eb2-4758-b5dc-9234fb09d99b-rw-600.png?1590088482
+content: ​​“From 8th grade to the end of high school in my home country of Japan, I was a part of the science museum volunteer group that explained the system and mechanics of the exhibits to visitors. The activity gave me an opportunity to explore the joy of the science and taught me the difficulty, but thrill of explaining technical terms to visitors. I was pleased to join SOAR because the activities continues my involvement in sharing the joy of science with younger generations—and I am excited to work with with future engineers.”
+---
+name: Balram K.
+photo: https://soarucd.weebly.com/uploads/1/3/1/7/131766630/published/0ff0e908-7e36-41bc-8a83-932a7dfb3773-rw-600.png?1587242350
+content: "I’ve participated in leadership positions since elementary school. Being in a few leadership roles in college has taught me that there are an infinite number of ways to reach your goals. All it takes is a little determination and confidence to strive in any environment. I want to help these students strive in their environment.”​​​​​​​
+---
+name: Josh D.
+photo: https://soarucd.weebly.com/uploads/1/3/1/7/131766630/published/75c38179-f4e8-481e-b8c2-8ceb605d2ed3-rw-600.png?1590088586
+content: "I’ve participated in leadership positions since elementary school. Being in a few leadership roles in college has taught me that there are an infinite number of ways to reach your goals. All it takes is a little determination and confidence to strive in any environment. I want to help these students strive in their environment.”​​​​​​​
+---
+name:
+photo:
+content:

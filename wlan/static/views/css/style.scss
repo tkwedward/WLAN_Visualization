@@ -1,57 +1,261 @@
-.row{
-    display:grid;
-    grid-template-columns: 1fr 5fr;
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 10px;
-
-
+body {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
 }
 
-.eventRow{
-    .eventBlock{
-        display:grid;
-        background: AliceBlue;
+.body{
+    width: 100vw;
+}
 
-        .inner_event_block{
-            margin: 0px;
-            padding: 5px;
+
+.header {
+    width: 100%;
+    max-width: 100%;
+    padding: 40px 0px;
+    color: #000000;
+    background: #ffffff;
+    backface-visibility: hidden;
+
+    .menu {
+        width: 100%;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+
+        a {
+            padding: 5px 1px ;
+            margin: 5px 10px;
+            font-family: "Unite", sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        a.highlighted {
+          border-bottom: 1px solid black;
+        }
+    }
+}
+
+
+.banner {
+    background:  #43a497;
+    $bannerPadding: 72px;
+    padding-top: $bannerPadding;
+    padding-bottom: $bannerPadding + 10px;
+    text-align: center;
+
+
+    .bannerPhoto {
+        img {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          height: 25vh;
+          margin-bottom: 22px;
         }
     }
 
-    .event_list_block{
-        margin-bottom: 20px;
+    .bannerPhoto.small {
+        img{
+            height: 150px;
+        }
+    }
+
+    .bannerText {
+        color: white;
+        font-size: 90px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        -webkit-transform: translateY(0) scale(1); opacity: 1;
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        -webkit-transition: -webkit-transform 0.7s ease-in 0.8s, opacity 0.7s ease-in 0.8s; transition: transform 0.7s ease-in 0.8s, opacity 0.7s ease-in 0.8s;
+        text-align: center;
+
+        .punctuation{
+            color: #f9ef84
+        }
+    }
+
+    .bannerText.small {
+        font-size: 48px;
+        margin-bottom: 10px;
+    }
+
+    .bannerSubText.small {
+        color: white;
+        font-size: 16px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 300;
     }
 }
 
+.content {
 
+  .maxWidthContainer {
+      max-width: 1000px;
+      margin: 0 auto;
+  }
 
-.timer_info{
-    color: red;
-}
-// .time {
-//     // width: 10vw;
-// }
-.host, .channel{
-    margin-bottom: 10px;
-    padding: 5px;
-    // width: 20vw
-}
+  .volunteersContainer{
+      .volunteerBox{
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          color: #818181;
+          font-family: "Montserrat";
+          font-weight: 300;
+          font-size: 18px;
+          line-height: 30px;
+          text-align: justify;
+          margin-top: 30px;
+          margin-bottom: 30px;
 
-.channel {
-    background: gold;
-    // width: 20vw
+          h2 {
+            color: black;
+            margin-top: 0px;
+            margin-bottom: 40px;
+          }
+
+          h2.right {
+              text-align: right;
+          }
+
+          img {
+              max-height: 350px;
+              margin-left: auto;
+              margin-right: auto;
+
+          }
+      }
+
+      .volunteerBox.first {
+          margin-top: 85px;
+      }
+
+      hr {
+        background-color: rgba(0,0,0,0.13);
+        border: 0pt none;
+        color: #eee;
+        color: rgba(0,0,0,0.13);
+        height: 1px;
+        margin: 0px auto;
+        text-align: center;
+      }
+  }
+
+  .contentText {
+      text-align: center;
+      padding: 50px;
+
+      h1 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 30px;
+        font-weight: 700;
+      }
+
+      h3 {
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+      }
+  }
+
+  .patchsContainer {
+      text-align: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      .patchContainer {
+          .patchImage {
+              width: 95%;
+          }
+      }
+  }
+
+  .activitiesGallery {
+      margin-left: auto;
+      margin-right: auto;
+      .activityContainer {
+          text-align: center;
+          .bigImageContainer{
+              text-align: center;
+              img {
+                height: 50vh;
+                object-fit: contain;
+                margin-bottom: 5px;
+                margin-left: auto;
+                margin-right: auto;
+              }
+          }
+      }
+
+      .thumbnailsContainer {
+          margin-top: 40px;
+          .thumbnail {
+                margin-right: 10px;
+                width: 80px;
+                height: 80px;
+                object-fit: cover
+          }
+      }
+
+  }
+
+  .aeroplaneImage{
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .originsAndMissions{
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    .textbox{
+        // width: 44vw;
+        margin: 1vw;
+        color: #818181;
+        font-family: "Montserrat", sans-serif;
+        line-height: 30px;
+        font-size: 16px;
+        font-weight: 300;
+
+        h2 {
+          color: black;
+          text-align: center;
+          font-family: "Montserrat", sans-serif;
+          font-size: 24px;
+          font-weight: 700;
+        }
+    }
+  }
+
+  .formContainer {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      .form {
+          width: 50vw;
+      }
+
+      .socialContractContainer {
+          width: 50vw;
+          img {
+              width: 400px;
+              object-fit: contain;
+          }
+      }
+  }
+}// .content
+
+.footer {
+  margin-top: 200px;
+  background: #43a497;
+  min-height: 65px;
 }
-//
-// .host_0 {
-//     background: AliceBlue
-// }
-//
-// .host_1 {
-//     background: DarkSeaGreen
-// }
-//
-// .host_2{
-//     background: DeepSkyBlue
-// }

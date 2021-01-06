@@ -1,0 +1,23 @@
+<div class="header">
+    <div class="menu">
+      <a href="/" class = "home"> HOME </a>
+      <a href="/our-volunteers" class = "volunteers"> OUR VOLUNTEERS </a>
+      <a href="/soar-classes-activities" class = "activities"> SOAR CLASSES & ACTIVITIES </a>
+      <a href="/get-involved" class = "participate"> GET INVOLVED </a>
+    </div>
+</div>
+
+<script type="text/javascript">
+  let thisPageURLArray = document.URL.split("/")
+  let thisPageURLName = thisPageURLArray[thisPageURLArray.length-1]
+  let menuArray = document.querySelectorAll(".menu a")
+  console.log(menuArray)
+  menuArray.forEach(p=>{
+      let _urlArray = p.href.split("/")
+      let _urlName = _urlArray[_urlArray.length-1]
+      p.classList.remove("highlighted")
+      if (thisPageURLName == _urlName) {
+          p.classList.add("highlighted")
+      }
+  })
+</script>

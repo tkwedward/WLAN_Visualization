@@ -1,20 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-
-
-    </head>
+    <%- include('head'); %>
 
     <body>
-        <div class="jsonData">
-            <%= pageTitle %>
-        </div>
-        <div class="bodyWrapper">
+        <script src="static/views/js/ready.js" charset="utf-8"></script>
 
-        </div>
+        <%- include('mainMenu'); %>
 
+        <div class="content">
+          <div class = "banner">
+              <div class="bannerPhoto"><img src="https://soarucd.weebly.com/uploads/1/3/1/7/131766630/published/pach-copy.png?1591327709"></div>
+              <div class="bannerText"> Welcome to SOAR <span class="punctuation">!</span> </div>
+          </div> <!-- banner -->
+          <div class = "contentText maxWidthContainer">
+            <h1>Are you ready to take flight?</h1>
+            <h4>STEM Outreach Academic Enforcement</h4>
+          </div> <!-- contentText -->
+
+          <div class="aeroplaneImage maxWidthContainer">
+              <img src="https://soarucd.weebly.com/uploads/1/3/1/7/131766630/free-png-white-paper-plane-png-images-transparent-paper-airplane-clipart-11562853408ec2mzpa70x_orig.png">
+          </div>
+          <div class="originsAndMissions maxWidthContainer">
+            <div class="origins textbox">
+                <h2> Our Origins </h2>
+                SOAR (STEM Outreach Academic Reinforcement) is a volunteer organization with the goal of introducing 5th-grade students (mentees) to the concepts and future opportunities in STEM. It is a collaboration between UC Davis, the Aerospace Museum of California, and the Community Outreach Academy (COA). While SOAR’s UC Davis arm is spearheaded by two research laboratories, <a> RASCAL </a> and <a> HRVIP </a>, in the Mechanical and Aerospace Engineering department, our volunteer base is composed of UC Davis students of all majors who are enthusiastic about making STEM a more inclusive field.
+            </div> <!-- origins -->
+            <div class="missions textbox">
+              <h2> Our Mission </h2>
+              SOAR's primary objective is to provide mentorship to students from underserved and underrepresented communities by bringing mentees face to face with UC Davis students in a collaborative, academic setting. The desired outcome is to develop connections between the mentors and mentees by learning and working together.
+              This collaboration takes place via monthly modules in which mentors travel to COA to interact with mentees face-to-face. This interaction usually involves working in a structured environment designed by the elementary school teachers to help reinforce the curriculum. It is in these small group settings that the mentees develop relationships with the mentors, naturally providing the mentees with a lens into the world of higher education.
+            </div> <!-- missions -->
+        </div>  <!-- originsAndMissions  -->
+      </div>  <!-- content  -->
+
+      <%- include('footer'); %>
     </body>
 
 
@@ -23,7 +42,7 @@
     </script>
 
     <link rel="stylesheet" href="static/views/css/style.css">
-    <script src="static/views/js/helper_function.js" charset="utf-8"></script>
-    <script src="static/views/js/main.js" charset="utf-8"></script>
+    <!-- <script src="static/views/js/main.js" charset="utf-8"></script> -->
+
 
 </html>
