@@ -2,8 +2,9 @@ body {
   position: absolute;
   left: 0px;
   top: 0px;
-  width: 100%;
+  width: 100vw;
   padding: 0px;
+  overflow-x: hidden;
   margin: 0px;
 }
 
@@ -12,12 +13,20 @@ body {
 }
 
 .header {
-  width: 100%;
+  width: 1400px;
   max-width: 100%;
-  padding: 40px 0px;
-  color: #000000;
-  background: #ffffff;
+  padding: 0px 0px;
+  margin-right: auto;
+  margin-left: auto;
+  color: white;
+  background: #43a497;
   backface-visibility: hidden;
+}
+.header .soarLogo {
+  margin: 20px 20px;
+  width: 80px;
+  position: relative;
+  vertical-align: middle;
 }
 .header .menu {
   width: 100%;
@@ -28,6 +37,7 @@ body {
 .header .menu a {
   padding: 5px 1px;
   margin: 5px 10px;
+  color: white;
   font-family: "Unite", sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -37,55 +47,100 @@ body {
   text-decoration: none;
 }
 .header .menu a.highlighted {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
 }
 
-.banner {
-  background: #43a497;
-  padding-top: 72px;
-  padding-bottom: 82px;
-  text-align: center;
-}
-.banner .bannerPhoto img {
-  display: block;
+.content {
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
-  height: 25vh;
-  margin-bottom: 22px;
+  /* -------------------- indexPage -------------------- */
+  /* -------------------- volunteerPage -------------------- */
+  /* -------------------- activitiesPage -------------------- */
+  /* ------------------- getInvolvedPage ------------------- */
 }
-.banner .bannerPhoto.small img {
-  height: 150px;
+.content .banner .bannerPhoto {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  position: relative;
 }
-.banner .bannerText {
+.content .banner .bannerPhoto img {
+  width: 100%;
+}
+.content .banner .bannerPhoto .bannerText {
   color: white;
-  font-size: 90px;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  -webkit-transform: translateY(0) scale(1);
   opacity: 1;
-  transform: translateY(0) scale(1);
-  opacity: 1;
-  -webkit-transition: -webkit-transform 0.7s ease-in 0.8s, opacity 0.7s ease-in 0.8s;
-  transition: transform 0.7s ease-in 0.8s, opacity 0.7s ease-in 0.8s;
-  text-align: center;
 }
-.banner .bannerText .punctuation {
+.content .banner .bannerPhoto .bannerText .punctuation {
   color: #f9ef84;
 }
-.banner .bannerText.small {
-  font-size: 48px;
-  margin-bottom: 10px;
-}
-.banner .bannerSubText.small {
+.content .banner .bannerSubText.small {
   color: white;
   font-size: 16px;
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
 }
-
-.content .maxWidthContainer {
-  max-width: 1000px;
-  margin: 0 auto;
+.content .originsAndMissions {
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.content .originsAndMissions .textbox {
+  margin: 1vw;
+  color: #818181;
+  font-family: "Montserrat", sans-serif;
+  line-height: 30px;
+  font-size: 16px;
+  font-weight: 300;
+}
+.content .originsAndMissions .textbox h2 {
+  color: black;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+.content .contentText {
+  text-align: center;
+  padding: 50px;
+}
+.content .contentText h1 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+}
+.content .contentText h3 {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+.content .bannerText.indexPage {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  color: blue;
+  font-size: 90px;
+  font-size: 5vw;
+  text-align: center;
+}
+.content .bannerText.volunteerPage {
+  position: absolute;
+  display: inline;
+  font-size: 3.5vw;
+  right: 40px;
+  top: 20px;
+  color: blue;
+}
+.content .volunteersContainer {
+  text-align: center;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .content .volunteersContainer .volunteerBox {
   display: grid;
@@ -108,7 +163,8 @@ body {
   text-align: right;
 }
 .content .volunteersContainer .volunteerBox img {
-  max-height: 350px;
+  max-height: 100%;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -124,25 +180,22 @@ body {
   margin: 0px auto;
   text-align: center;
 }
-.content .contentText {
-  text-align: center;
-  padding: 50px;
-}
-.content .contentText h1 {
-  font-family: "Montserrat", sans-serif;
-  font-size: 30px;
-  font-weight: 700;
-}
-.content .contentText h3 {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+.content .bannerText.activitiesPage {
+  position: absolute;
+  display: inline;
+  left: 30px;
+  top: 30px;
+  font-size: 3.5vw;
 }
 .content .patchsContainer {
-  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  width: 90%;
 }
 .content .patchsContainer .patchContainer .patchImage {
-  width: 95%;
+  width: 60%;
 }
 .content .activitiesGallery {
   margin-left: auto;
@@ -170,46 +223,58 @@ body {
   height: 80px;
   object-fit: cover;
 }
-.content .aeroplaneImage {
-  text-align: center;
-  margin-bottom: 80px;
+.content .bannerText.getInvolvedPage {
+  position: absolute;
+  display: inline;
+  right: 30px;
+  bottom: 30px;
+  font-size: 5vw;
 }
-.content .originsAndMissions {
-  text-align: center;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-.content .originsAndMissions .textbox {
-  margin: 1vw;
-  color: #818181;
+.content .mainText {
+  max-width: 1120px;
+  padding: 5px 30px;
+  margin-left: auto;
+  margin-right: auto;
   font-family: "Montserrat", sans-serif;
-  line-height: 30px;
-  font-size: 16px;
   font-weight: 300;
+  font-size: 16px;
+  line-height: 30px;
+  color: #818181;
 }
-.content .originsAndMissions .textbox h2 {
+.content .mainText h1 {
   color: black;
-  text-align: center;
-  font-family: "Montserrat", sans-serif;
-  font-size: 24px;
-  font-weight: 700;
+}
+.content .mainText .slogan {
+  font-size: 32px;
+  font-style: italic;
+  line-height: 40px;
 }
 .content .formContainer {
+  max-width: 1120px;
+  padding: 5px 30px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 20px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 50% 50%;
 }
 .content .formContainer .form {
   width: 50vw;
 }
 .content .formContainer .socialContractContainer {
-  width: 50vw;
+  text-align: center;
+  padding: 5px 30px;
 }
 .content .formContainer .socialContractContainer img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   width: 400px;
   object-fit: contain;
 }
 
+/* ------------------- footer ------------------- */
 .footer {
   margin-top: 200px;
   background: #43a497;
